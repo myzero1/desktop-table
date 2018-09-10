@@ -44,9 +44,13 @@
 
 
       function initTable(){
-
         // var height = $(window).height();
-        var height = height = window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight;;
+        var height = height = window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight;
+
+        if(navigator.appName == "Microsoft Internet Explorer"&&parseInt(navigator.appVersion.split(";")[1].replace(/[ ]/g, "").replace("MSIE",""))<=9){
+                // alert("您的浏览器版本过低，请下载IE9及以上版本");
+                $('th').css({'height':'30px'});
+            }
         console.log(height);
         // $(window).scrollTop()
         var rowHeight = 40;
@@ -170,6 +174,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         border:1px solid #ddd;
+        padding: 0 8px;
       }
 
       #table-layout{
