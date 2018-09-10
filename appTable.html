@@ -1,0 +1,182 @@
+<link rel="stylesheet" href="bootstrap.min.css">
+<link rel="stylesheet" href="demo.css">
+<link rel="stylesheet" href="jquery.resizableColumns.css">
+
+<script src="jquery.1.9.1.min.js"></script>
+<!-- <script src="jquery.resizableColumns.min.js"></script> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+<div id="content-wrap">
+    <div id="table-layout">
+      <table id="resizable-columns"  class="table table-bordered" data-resizable-columns-id="demo-table-v2">
+        <thead>
+          <tr>
+            <th data-resizable-column-id="#">#</th>
+            <th data-resizable-column-id="first_name">col2</th>
+            <th data-resizable-column-id="last_name">col3</th>
+            <th data-resizable-column-id="username" data-noresize="" >col4</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+    <script>
+
+
+
+    $(function(){
+      window.mydata = dataInit();
+      initTable();
+      $(window).resize(function(){
+          initTable();
+      });
+      // $("#resizable-columns").resizableColumns();
+
+
+
+      function initTable(){
+
+        var height = $(window).height();
+        // $(window).scrollTop()
+        var rowHeight = 40;
+        var rowTotal = Math.ceil((height-1)/(rowHeight+1))-1;
+        // console.log(rowTotal);
+        window.rowTotal = rowTotal;
+
+        for (var i = 1; i <= rowTotal; i++) {
+            var rowHtml = '<tr>\
+                            <td class="tr'+i+'_td0"></td>\
+                            <td class="tr'+i+'_td1"></td>\
+                            <td class="tr'+i+'_td2"></td>\
+                            <td class="tr'+i+'_td3"></td>\
+                          </tr>';
+          $("#resizable-columns tbody").append(rowHtml);
+        }
+
+        var data = getData(0, rowTotal);
+        updateTabable(data, rowTotal);
+        changeScroll();
+      }
+
+      function dataInit(){
+        var data = new Array();
+        for (var i = 0; i < 50; i++) {
+          data[i] = new Array(i, 'colB'+i, 'colC'+i, 'colD'+i);
+        }
+
+        $("#content-wrap").height(41*50);
+
+        return data;
+      }
+
+
+      function getData(offset, limit){
+        var data = window.mydata;
+        var myreturn = new Array();
+        for (var i = 0; i <= limit; i++) {
+          var j = i+offset;
+          myreturn[i] = data[j];
+        }
+        // console.log(myreturn);
+        return myreturn;
+      }
+
+      function updateTabable(data, limit){
+        for (var i = 0; i <= limit; i++) {
+          var trData = data[i];
+          for (var j = 0; j< trData.length; j++) {
+            var className = ".tr"+i+"_td"+j;
+            $(className).text(data[i][j]);
+            // console.log(data[i][j]);
+          }
+        }
+      }
+
+      function changeScroll(){
+        window.onscroll = function(){
+          var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+          // var offset = $("body").scrollTop();
+          var offset = scrollTop;
+          console.log(offset);
+          var offsetRow =  Math.floor(offset/41);
+          var data = getData(offsetRow, window.rowTotal);
+          updateTabable(data, window.rowTotal);
+        }
+      }
+
+
+
+
+
+
+
+
+
+
+
+      
+
+
+
+
+
+    });
+
+
+
+
+    </script>
+
+
+
+
+    <style type="text/css">
+      html{
+        height: 100%;
+      }
+      .table{
+        margin-bottom:0;
+      }
+
+      td{
+        /*width: 300px;*/
+        height:40px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      #content-wrap{
+        height: 1000px;
+        background: red;
+      }
+
+      #table-layout{
+        position: fixed;
+        width: 100%;
+        background: #fff;
+      }
+
+
+    </style>
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
