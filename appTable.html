@@ -77,11 +77,11 @@
 
       function dataInit(){
         var data = new Array();
-        for (var i = 0; i < 50; i++) {
+        for (var i = 0; i < 10000; i++) {
           data[i] = new Array(i, 'colB'+i, 'colC'+i, 'colD'+i);
         }
 
-        $("#content-wrap").height(41*50);
+        $("#content-wrap").height(41*10000);
 
         return data;
       }
@@ -184,8 +184,35 @@
       }
 
 
+
+
+
+
+
     </style>
 
+
+
+
+<!--[if lte IE 6]> 
+<style type="text/css"> 
+html { 
+  /*这个可以让IE6下滚动时无抖动*/ 
+  background: url(about:black) no-repeat fixed 
+} 
+#table-layout{ 
+  position: absolute; 
+} 
+#table-layout{ 
+  /*这个解决body有padding时，IE6下100%不能铺满的问题*/ 
+  width: expression(offsetParent.clientWidth); 
+} 
+/*下面三组规则用于IE6下top计算*/ 
+#table-layout { 
+  top: expression(offsetParent.scrollTop); 
+}
+</style> 
+<![endif]--> 
 
 
 
